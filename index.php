@@ -4,7 +4,7 @@
  * Plugin Name: KGR Shortcode
  * Plugin URI: https://github.com/constracti/kgr-shortcode
  * Description: Provides various shortcodes.
- * Version: 0.3
+ * Version: 0.4
  * Requires at least: 4.5.0
  * Requires PHP: 8.0
  * Author: constracti
@@ -37,5 +37,23 @@ add_shortcode( 'kgr_shortcode_post', function( array $atts ): string {
 	};
 	if ( !is_null( $atts['trim'] ) )
 		$ret = wp_trim_words( $ret, $atts['trim'] );
+	return $ret;
+} );
+
+add_shortcode( 'kgr_shortcode_term', function( array $atts ): string {
+	$atts = wp_parse_args( $atts, [
+		'id' => NULL,
+		'field' => NULL,
+	] );
+	if ( is_null( $atts['id'] ) )
+		return '';
+	$term = get_term( $atts['id'] );
+	if ( is_null( $term ) )
+		return '';
+	$ret = match ( $atts['field'] ) {
+		'permalink' => get_term_link( $term ),
+		'name' => $term->name,
+		default => '',
+	};
 	return $ret;
 } );

@@ -10,6 +10,9 @@ Provides various shortcodes.
 
 == Changelog ==
 
+= 0.4 =
+* Support permalink and name for terms.
+
 = 0.3 =
 * Support menu_url field.
 
